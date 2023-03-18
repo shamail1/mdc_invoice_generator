@@ -1,0 +1,9 @@
+{% block content %}
+    <h1>Upload CSV file</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="csv_file">Select a CSV file:</label>
+        <input type="file" name="csv_file" accept=".csv">
+        <button type="submit">Create Invoice</button>
+    </form>
+{% endblock %}
