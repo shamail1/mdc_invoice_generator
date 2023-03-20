@@ -10,6 +10,7 @@ def upload_csv(request):
             messages.error(request,'File is not CSV type')
             return HttpResponseRedirect(reverse('upload_csv'))
         
+        print("shamail is here ", request.POST['to'])
         # Parse CSV file
         data = []
         csv_data = csv.reader(csv_file.read().decode('utf-8').splitlines())
@@ -20,8 +21,8 @@ def upload_csv(request):
         final_invoice_data = process_data(data)
         
         # Pass CSV data to template
-        context = {'data': final_invoice_data}
-        return render(request, 'table.html', context)
+        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date'] }
+        return render(request, 'invoice.html', context)
 
     return render(request, 'upload_csv.html')
 

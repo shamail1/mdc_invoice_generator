@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{to}}_{{date}}_invoice</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.4;
+			color: #333;
+			background-color: #f8f8f8;
+			padding: 20px;
+		}
+
+		h1 {
+			font-size: 36px;
+			font-weight: bold;
+			margin-bottom: 10px;
+			color: #444;
+		}
+
+		p {
+			margin: 5px 0;
+			color: #777;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-top: 20px;
+		}
+
+		table th, table td {
+			padding: 10px;
+			text-align: left;
+			border: 1px solid #ddd;
+		}
+
+		table th {
+			background-color: #f5f5f5;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.invoice-info {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 30px;
+			margin-bottom: 20px;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+			border-radius: 5px;
+		}
+
+		.invoice-info div {
+			margin-right: 20px;
+		}
+
+		.invoice-info p {
+			margin-bottom: 5px;
+			color: #444;
+		}
+
+		.total {
+			font-weight: bold;
+		}
+
+		.footer {
+			margin-top: 50px;
+			text-align: center;
+			color: #777;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="header">
+		<div class="logo">
+			{% load static %}
+			<img src="{% static 'invoice_generator/media/mdc-chauffeur-service-logo-new.PNG' %}" alt="Logo" style="float: right; width: 150px; margin: 20px;">
+		</div>
+		<h1>MDC Executive Chauffeur Car Service</h1>
+		<p>Licensed Operator</p>
+		<p>91 Jubilee Road, Aldershot, GU113QD</p>
+		<p>Website: <a href="https://mdcchauffeurservice.co.uk/" target="_blank">mdcchauffeurservice.co.uk</a></p>
+		<p>Email: <a href="mailto:mdcchauffeurservice@gmail.com">mdcchauffeurservice@gmail.com</a></p>
+		<p>Landline: 01252 279335</p>
+		<p>Mobile: 07931 742521</p>
+	</div>
+
+	<div class="invoice">
+		<div class="invoice-info">
+			<div>
+				<p>Invoice Number:</p>
+				<p>MDC179</p>
+			</div>
+			<div>
+				<p>Invoice Date:</p>
+				{% if date %}
+                <p>{{date}}</p>
+                {% else %}
+				<p>place the date here</p>
+                {% endif %}  
+			</div>
+		</div>
+
+		<div class="header", style="display: inline-block;">
+			{% if to %}
+            <p>To: {{to}}</p>
+            {% else %}
+			<p>place client name here</p>
+            {% endif %}  
+		</div>
+
+		<table>
+			{% for row in data %}
+			<tr>
+			  {% for column in row %}
+			  <td>{{ column }}</td>
+			  {% endfor %}
+			</tr>
+			{% endfor %}
+		  </table>
+	</div>
+</body>
+</html>

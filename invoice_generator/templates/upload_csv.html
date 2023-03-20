@@ -2,6 +2,12 @@
     <h1>Upload CSV file</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <label for="invoice_date">Invoice date:</label>
+        <input type="date" name="invoice_date">
+        <br>
+        <label for="to">To:</label>
+        <input type="text" name="to">
+        <br>
         <label for="csv_file">Select a CSV file:</label>
         <input type="file" name="csv_file" accept=".csv">
         <button type="submit">Create Invoice</button>
