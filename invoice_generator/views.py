@@ -29,16 +29,17 @@ def upload_csv(request):
 def process_data(data):
     data_required_col = []
     data_col_names = data[0]
-    wanted_col_names = ["Date", "Time", "Customer ", "Pick up Address", "Drop off Address", "Fare"]
+    wanted_col_names = ["Date", "Time", "Customer", "Pick up Address", "Drop off Address", "Fare"]
 
     for i in range(len(wanted_col_names)):
         for j in range(len(data_col_names)):
-            if data[0][j] == wanted_col_names[i]:
+            if str(data[0][j]).replace(" ", "") == str(wanted_col_names[i]).replace(" ", ""):
                 c_list = []
                 for k in range(len(data)):
                     c_list.append(data[k][j])
                 data_required_col.append(c_list)
-        
+
+    print("sham is herre",data_required_col)    
     final_processed_data = []
     for i in range(len(data_required_col[0])):
         c_list = []
