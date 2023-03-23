@@ -2,9 +2,112 @@
 <html>
 <head>
     <title>Log Ride</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        nav {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            margin: 1rem;
+        }
+        
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0.5rem;
+        }
+        
+        li {
+            margin: 0.5rem;
+        }
+        
+        a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        a:hover {
+            background-color: #ddd;
+        }
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+        
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        input, button {
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        input[type="number"] {
+            width: auto;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #3e8e41;
+        }
+        
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 600px) {
+            form {
+                padding: 10px;
+            }
+            input, button {
+                padding: 5px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Log Ride</h1>
+    <nav>
+        <ul>
+          <li><a href="{% url 'upload_csv' %}">Invoice Generator</a></li>
+          <li><a href="{% url 'log_ride' %}">Enter New Booking</a></li>
+          <li><a href="{% url 'view_bookings' %}">View Bookings Data</a></li>
+        </ul>
+      </nav>
+    <h1>Enter Booking Information</h1>
     <form method="post">
         {% csrf_token %}
         <label for="day">Day:</label>
