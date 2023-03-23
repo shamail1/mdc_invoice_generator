@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Booking information</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        nav {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            margin: 1rem;
+        }
+        
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0.5rem;
+        }
+        
+        li {
+            margin: 0.5rem;
+        }
+        
+        a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        a:hover {
+            background-color: #ddd;
+        }
+		/* Styles for desktop screens */
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		table, th, td {
+			border: 1px solid black;
+			padding: 8px;
+			text-align: left;
+		}
+		label {
+			display: inline-block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+		input[type="date"], input[type="text"], input[type="submit"], button {
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			margin-right: 10px;
+		}
+		input[type="submit"], button {
+			background-color: blue;
+			color: white;
+		}
+		button {
+			background-color: green;
+		}
+		form {
+			margin-bottom: 20px;
+		}
+		
+		/* Styles for mobile screens */
+		@media only screen and (max-width: 767px) {
+			label {
+				font-size: 14px;
+			}
+			input[type="date"], input[type="text"], input[type="submit"], button {
+				font-size: 14px;
+			}
+			input[type="submit"], button {
+				padding: 8px;
+			}
+		}
+	</style>
+</head>
+<body>
+    <div>
+        <nav>
+            <ul>
+              <li><a href="{% url 'home' %}">HOME</a></li>
+            </ul>
+          </nav>
+    </div>
+    <div>
+        <form method="get">
+            <label for="date_from">Date From:</label>
+            <input type="date" id="date_from" name="date_from">
+            <label for="job_source">Job Source:</label>
+            <input type="text" id="job_source" name="job_source">
+            <input type="submit" value="Filter">
+        </form>
+		<table>
+			{% for row in data %}
+			<tr>
+			  {% for column in row %}
+			  <td>{{ column }}</td>
+			  {% endfor %}
+			</tr>
+			{% endfor %}
+		  </table>
+          <form method="post">
+            {% csrf_token %}
+            <label for="invoice_date">Invoice date:</label>
+            <input type="date" name="invoice_date">
+            <label for="to">To:</label>
+            <input type="text" name="to"><br>
+            <button type="submit">Create Invoice</button>
+        </form>
+	</div>
+</body>
+</html>

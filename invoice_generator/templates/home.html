@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Home Page</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        nav {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            margin: 1rem;
+        }
+        
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0.5rem;
+        }
+        
+        li {
+            margin: 0.5rem;
+        }
+        
+        a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        a:hover {
+            background-color: #ddd;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>MDC CHAUFFEUR SERVICE HUB</h1>
+    <nav>
+      <ul>
+        <li><a href="{% url 'upload_csv' %}">Invoice Generator</a></li>
+        <li><a href="{% url 'log_ride' %}">Enter New Booking</a></li>
+        <li><a href="{% url 'view_bookings' %}">View Bookings Data</a></li>
+      </ul>
+    </nav>
+  </body>
+</html>
