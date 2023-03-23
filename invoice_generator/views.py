@@ -128,7 +128,7 @@ def log_ride(request):
         return render(request, 'log_ride.html')
 
 def view_bookings(request):
-    with open('rides.csv') as csv_file:
+    with open('/home/mdcInvoiceGenerator/mdc_invoice_generator/rides.csv') as csv_file:
         csv_data = csv.reader(csv_file.read().splitlines())
         #csv_data = csv.reader(csv_file)
 
