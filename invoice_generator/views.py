@@ -155,7 +155,7 @@ def view_bookings(request):
         filtered_data = []
         filtered_data.append(data[0])
         for row in data:
-            if str(row[16]).lower() == str(job_source).lower():
+            if (str(row[16]).lower()).strip() == (str(job_source).lower()).strip():
                 filtered_data.append(row)
 
         data = filtered_data
