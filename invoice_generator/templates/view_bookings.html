@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Booking information</title>
+</head>
+<body>
+    <div>
+        <form method="get">
+            <label for="date_from">Date From:</label>
+            <input type="date" id="date_from" name="date_from">
+            <label for="job_source">Job Source:</label>
+            <input type="text" id="job_source" name="job_source">
+            <input type="submit" value="Filter">
+        </form>
+		<table>
+			{% for row in data %}
+			<tr>
+			  {% for column in row %}
+			  <td>{{ column }}</td>
+			  {% endfor %}
+			</tr>
+			{% endfor %}
+		  </table>
+          <form method="post">
+            {% csrf_token %}
+            <label for="invoice_date">Invoice date:</label>
+            <input type="date" name="invoice_date">
+            <label for="to">To:</label>
+            <input type="text" name="to">
+            <button type="submit">Create Invoice</button>
+        </form>
+	</div>
+</body>
+</html>
