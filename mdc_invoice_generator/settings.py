@@ -119,8 +119,7 @@ USE_TZ = True
 STATIC_URL = 'invoice_generator/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "invoice_generator/static")
 STATICFILES_DIRS = [
-    STATIC_ROOT,
-    os.path.join(BASE_DIR, 'rides.csv'), # add this line to include the rides.csv file
+    os.path.join(BASE_DIR), # add this line to include the rides.csv file
 ]
 
 # Default primary key field type
