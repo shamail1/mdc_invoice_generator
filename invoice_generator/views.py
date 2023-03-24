@@ -5,7 +5,11 @@ from django.urls import reverse
 import pandas as pd
 from django.http import HttpResponse
 from .models import Ride
+from pathlib import Path
+import os
+from django.conf import settings
 
+csv_file_path = os.path.join(settings.BASE_DIR, "rides.csv")
 
 def home(request):
     
@@ -115,7 +119,7 @@ def log_ride(request):
         ride.save()
 '''
         # Write to CSV file
-        with open('rides.csv', mode='a') as file:
+        with open(csv_file_path, mode='a') as file:
             writer = csv.writer(file)
             writer.writerow([day, date, time, customer, contact_number, pick_up_address,
                              drop_off_address, driver_name, driver_badge, vehicle_reg,
@@ -128,7 +132,7 @@ def log_ride(request):
         return render(request, 'log_ride.html')
 
 def view_bookings(request):
-    with open('/home/mdcInvoiceGenerator/mdc_invoice_generator/rides.csv') as csv_file:
+    with open(csv_file_path) as csv_file:
         csv_data = csv.reader(csv_file.read().splitlines())
         #csv_data = csv.reader(csv_file)
 
