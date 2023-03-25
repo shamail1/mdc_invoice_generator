@@ -11,7 +11,7 @@ urlpatterns = [
     path('create_invoice/', upload_csv, name='upload_csv'),
     path('input_booking_data/', log_ride, name='log_ride'),
     path('view_booking_data/', view_bookings, name='view_bookings'),
-    path('delete/<str:id>/', delete_row, name='delete_row'),
+    path('delete/<str:id>/', delete_row, name='del_row'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
