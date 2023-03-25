@@ -155,14 +155,14 @@ def view_bookings(request):
 
      # Filter the data based on the filter criteria
     if date_from:
-        data = [row for row in data if row[1] >= date_from]
+        data = [row for row in data if row[2] >= date_from]
 
     
     if job_source:
         filtered_data = []
         filtered_data.append(data[0])
         for row in data:
-            if (str(row[16]).lower()).strip() == (str(job_source).lower()).strip():
+            if (str(row[17]).lower()).strip() == (str(job_source).lower()).strip():
                 filtered_data.append(row)
 
         data = filtered_data
