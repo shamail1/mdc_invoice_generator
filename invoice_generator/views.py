@@ -8,6 +8,8 @@ from .models import Ride
 from pathlib import Path
 import os
 from django.conf import settings
+import random
+import time
 
 csv_file_path = os.path.join(settings.BASE_DIR, "rides.csv")
 
@@ -79,6 +81,7 @@ def process_data(data):
 
 def log_ride(request):
     if request.method == 'POST':
+        id5 = random_id5()
         day = request.POST['day']
         date = request.POST['date']
         time = request.POST['time']
@@ -121,7 +124,7 @@ def log_ride(request):
         # Write to CSV file
         with open(csv_file_path, mode='a') as file:
             writer = csv.writer(file)
-            writer.writerow([day, date, time, customer, contact_number, pick_up_address,
+            writer.writerow([id5, day, date, time, customer, contact_number, pick_up_address,
                              drop_off_address, driver_name, driver_badge, vehicle_reg,
                              license_vehicle, fare, payment_type, date_booked, time_booked,
                              status, job_source])
@@ -176,5 +179,37 @@ def view_bookings(request):
 
     return render(request, 'view_bookings.html', context)
     
+def delete_row(request, id):
+    # get the path to the CSV file
+    
+    # read the CSV file into a list of dictionaries
+    with open(csv_file_path, 'r') as f:
+        csv_data = csv.reader(f.read().splitlines())
+        data = [row for row in csv_data]
+    
+    # delete empty rows
+    for row in data:
+        if len(row) == 0:
+            data.remove(row)
 
+    # remove the row with the given id from the list
+    if str(id).strip() != "data_id".strip():
+        data = [row for row in data if row[0] != str(id)]
+    
+    # write the updated data back to the CSV file
+    with open(csv_file_path, 'w', newline='') as f:
+        #writer = csv.DictWriter(f, fieldnames=fieldnames)
+        #writer.writeheader()
+        writer = csv.writer(f)
+        writer.writerows(data)
+    
+    return HttpResponseRedirect(reverse('view_bookings'))
+
+def random_id5():
+    id5 = ""
+    random.seed(time.time())
+    for i in range(5):
+        random_int = random.randint(1,9)
+        id5 = id5 + str(random_int)
+    return id5
 
