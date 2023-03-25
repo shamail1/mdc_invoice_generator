@@ -109,6 +109,7 @@
 			  {% for column in row %}
 			  <td>{{ column }}</td>
 			  {% endfor %}
+			  <td><a href="{% url 'delete_row' row.0 %}">Delete</a></td>
 			</tr>
 			{% endfor %}
 		  </table>
