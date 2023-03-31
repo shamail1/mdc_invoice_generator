@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Ride</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        nav {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            margin: 1rem;
+        }
+        
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0.5rem;
+        }
+        
+        li {
+            margin: 0.5rem;
+        }
+        
+        a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        a:hover {
+            background-color: #ddd;
+        }
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+        
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        input, button {
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        input[type="number"] {
+            width: auto;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #3e8e41;
+        }
+        
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 600px) {
+            form {
+                padding: 10px;
+            }
+            input, button {
+                padding: 5px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="{% url 'upload_csv' %}">Invoice Generator</a></li>
+          <li><a href="{% url 'log_ride' %}">Enter New Booking</a></li>
+          <li><a href="{% url 'view_bookings' %}">View Bookings Data</a></li>
+        </ul>
+      </nav>
+    <h1>Enter Booking Information</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="day">Day:</label>
+        <input type="text" name="day" value="{{autofill_values.day}}" required><br>
+
+        <label for="day">Date:</label>
+        <input type="date" name="date" value="{{autofill_values.date}}" required><br>
+
+        <label for="time">Time:</label>
+        <input type="time" name="time" value="{{autofill_values.time}}" required><br>
+
+        <label for="customer">Customer:</label>
+        <input type="text" name="customer" value="{{autofill_values.customer}}" required><br>
+
+        <label for="contact_number">Contact Number:</label>
+        <input type="text" name="contact_number" value="{{autofill_values.contact_number}}" required><br>
+
+        <label for="pick_up_address">Pick up Address:</label>
+        <input type="text" name="pick_up_address" value="{{autofill_values.pick_up_address}}" required><br>
+
+        <label for="drop_off_address">Drop off Address:</label>
+        <input type="text" name="drop_off_address" value="{{autofill_values.drop_off_address}}" required><br>
+
+        <label for="driver_name">Driver Name:</label>
+        <input type="text" name="driver_name" value="{{autofill_values.driver_name}}" required><br>
+
+        <label for="driver_badge">Driver Badge:</label>
+        <input type="text" name="driver_badge" value="{{autofill_values.driver_badge}}" required><br>
+
+        <label for="vehicle_reg">Vehicle Reg:</label>
+        <input type="text" name="vehicle_reg" value="{{autofill_values.vehicle_reg}}" required><br>
+
+        <label for="license_vehicle">License Vehicle:</label>
+        <input type="text" name="license_vehicle" value="{{autofill_values.license_vehicle}}" required><br>
+
+        <label for="fare">Fare:</label>
+        <input type="number" name="fare" value="{{autofill_values.fare}}" required><br>
+
+        <label for="payment_type">Payment Type:</label>
+        <input type="text" name="payment_type" value="{{autofill_values.payment_type}}" required><br>
+
+        <label for="date_booked">Date Booked:</label>
+        <input type="date" name="date_booked" value="{{autofill_values.date_booked}}" required><br>
+
+        <label for="time_booked">Time Booked:</label>
+        <input type="time" name="time_booked" value="{{autofill_values.time_booked}}" required><br>
+        
+        <label for="status">Status:</label>
+        <input type="text" name="status" value="{{autofill_values.status}}" required><br>
+
+        <label for="job_source">Job source:</label>
+        <input type="text" name="job_source" value="{{autofill_values.job_source}}" required><br>
+
+        <button type="submit">Edit Booking</button>
+    </form>
+</body>
+</html>

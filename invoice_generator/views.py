@@ -10,6 +10,7 @@ import os
 from django.conf import settings
 import random
 import time
+from django.utils.html import escape
 
 csv_file_path = os.path.join(settings.BASE_DIR, "rides.csv")
 
@@ -213,3 +214,79 @@ def random_id5():
         id5 = id5 + str(random_int)
     return id5
 
+def edit_row(request, id):
+    
+    # read the CSV file into a list 
+    with open(csv_file_path, 'r') as f:
+        csv_data = csv.reader(f.read().splitlines())
+        data = [row for row in csv_data]
+    
+    # delete empty rows
+    for row in data:
+        if len(row) == 0:
+            data.remove(row)
+ 
+    # find the data row that needs to be edited using the row id
+    if str(id).strip() != "data_id".strip():
+        row_to_be_edited = []
+        for row in data:
+            if row[0] == str(id):
+                row_to_be_edited = row
+                break
+    
+    form_info_keys = ["day", "date", "time", "customer", "contact_number", "pick_up_address", "drop_off_address", "driver_name", "driver_badge", "vehicle_reg", "license_vehicle", "fare", "payment_type", "date_booked", "time_booked", "status", "job_source"]
+    form_info_values = row_to_be_edited[1:]
+
+    form_info_values_escaped = []
+    for value in form_info_values:
+        if isinstance(value, str):
+            form_info_values_escaped.append(escape(value))
+        else:
+            form_info_values_escaped.append(value)
+            
+    autofill_values = dict(zip(form_info_keys, form_info_values_escaped))
+    
+    if request.method == "POST":
+            
+        id5 = str(id)+ "e"
+        day = request.POST['day']
+        date = request.POST['date']
+        time = request.POST['time']
+        customer = request.POST['customer']
+        contact_number = request.POST['contact_number']
+        pick_up_address = request.POST['pick_up_address']
+        drop_off_address = request.POST['drop_off_address']
+        driver_name = request.POST['driver_name']
+        driver_badge = request.POST['driver_badge']
+        vehicle_reg = request.POST['vehicle_reg']
+        license_vehicle = request.POST['license_vehicle']
+        fare = request.POST['fare']
+        payment_type = request.POST['payment_type']
+        date_booked = request.POST['date_booked']
+        time_booked = request.POST['time_booked']
+        status = request.POST['status']
+        job_source = request.POST['job_source']
+
+        edited_row = [id5, day, date, time, customer, contact_number, pick_up_address,
+                             drop_off_address, driver_name, driver_badge, vehicle_reg,
+                             license_vehicle, fare, payment_type, date_booked, time_booked,
+                             status, job_source]
+
+        # replace old row with new edited row
+        filtered_data = []
+        for row in data:
+            if row[0] != str(id):
+                filtered_data.append(row)
+            if row[0] == str(id):
+                filtered_data.append(edited_row)
+        data = filtered_data 
+
+        with open(csv_file_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(data)
+
+        return HttpResponseRedirect(reverse('view_bookings'))
+        
+
+    
+    return render(request, 'edit.html', {"autofill_values": autofill_values})
