@@ -103,16 +103,21 @@
             <input type="text" id="job_source" name="job_source">
             <input type="submit" value="Filter">
         </form>
-		<table>
-			{% for row in data %}
-			<tr>
-			  {% for column in row %}
-			  <td>{{ column }}</td>
+		<div style="width: 100%; overflow: auto;">
+			<table>
+			  {% for row in data %}
+				<tr>
+				  {% for column in row %}
+					<td>{{ column }}</td>
+				  {% endfor %}
+				  {% if forloop.counter > 1 %}
+					<td><a href="{% url 'del_row' row.0 %}">Delete</a></td>
+					<td><a href="{% url 'edit_row' row.0 %}">Edit</a></td>
+				  {% endif %}
+				</tr>
 			  {% endfor %}
-			  <td><a href="{% url 'del_row' row.0 %}">Delete</a></td>
-			</tr>
-			{% endfor %}
-		  </table>
+			</table>
+		  </div>
           <form method="post">
             {% csrf_token %}
             <label for="invoice_date">Invoice date:</label>
