@@ -121,6 +121,16 @@
 			  {% endfor %}
 			</tr>
 			{% endfor %}
+			{% if total %}
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><strong>TOTAL: </strong></td>
+				<td><strong>£{{ total }}</strong></td>
+			</tr>
+			{% endif %}
 		  </table>
 	</div>
 </body>
