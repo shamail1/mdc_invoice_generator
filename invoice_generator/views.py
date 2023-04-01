@@ -39,9 +39,9 @@ def upload_csv(request):
         print("Invoice data before processing: ", data)
         final_invoice_data = process_data(data)
         print("processed invoice data: ", final_invoice_data)
-        
+
         # Pass CSV data to template
-        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date'] }
+        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date']}
         return render(request, 'invoice.html', context)
 
     return render(request, 'upload_csv.html')
@@ -173,9 +173,11 @@ def view_bookings(request):
         print("Invoice data before processing: ", data)
         final_invoice_data = process_data(data)
         print("processed invoice data: ", final_invoice_data)
+
+        total = calc_total(final_invoice_data)
         
         # Pass CSV data to template
-        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date']}
+        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date'], 'total': total}
         return render(request, 'invoice.html', context)
 
     return render(request, 'view_bookings.html', context)
@@ -290,3 +292,14 @@ def edit_row(request, id):
 
     
     return render(request, 'edit.html', {"autofill_values": autofill_values})
+
+def calc_total(data):
+    data_head = data[0]
+    fare_index = data_head.index("Fare")
+
+    total = 0
+
+    for i in range(len(data)-1):
+        total = total + int(data[i+1][fare_index])
+    
+    return total
