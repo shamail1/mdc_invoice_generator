@@ -122,6 +122,8 @@
             {% csrf_token %}
             <label for="invoice_date">Invoice date:</label>
             <input type="date" name="invoice_date">
+			<label for="invoice_number">Invoice Number:</label>
+            <input type="text" name="invoice_number">
             <label for="to">To:</label>
             <input type="text" name="to"><br>
             <button type="submit">Create Invoice</button>

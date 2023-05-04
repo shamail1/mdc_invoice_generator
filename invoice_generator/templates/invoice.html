@@ -93,7 +93,11 @@
 		<div class="invoice-info">
 			<div>
 				<p>Invoice Number:</p>
-				<p>MDC179</p>
+				{% if invoice_number %}
+				<p>{{invoice_number}}</p>
+				{% else %}
+				<p>MDCXXX</p>
+				{% endif %}
 			</div>
 			<div>
 				<p>Invoice Date:</p>
