@@ -11,6 +11,8 @@ from django.conf import settings
 import random
 import time
 from django.utils.html import escape
+import datetime
+import calendar
 
 csv_file_path = os.path.join(settings.BASE_DIR, "rides.csv")
 
@@ -76,7 +78,9 @@ def process_data(data):
         for j in range(len(data_required_col)):
             c_list.append(data_required_col[j][i])
         final_processed_data.append(c_list)
-        
+
+
+    final_processed_data = convert_dates_to_written_format(final_processed_data)   
     return final_processed_data
 
 
@@ -177,7 +181,7 @@ def view_bookings(request):
         total = calc_total(final_invoice_data)
         
         # Pass CSV data to template
-        context = {'data': final_invoice_data, 'to' : request.POST['to'], 'date' : request.POST['invoice_date'], 'total': total}
+        context = {'data': final_invoice_data, 'invoice_number' : request.POST['invoice_number'], 'to' : request.POST['to'], 'date' : request.POST['invoice_date'],'total': total}
         return render(request, 'invoice.html', context)
 
     return render(request, 'view_bookings.html', context)
@@ -303,3 +307,29 @@ def calc_total(data):
         total = total + int(data[i+1][fare_index])
     
     return total
+
+def convert_dates_to_written_format(data):
+    data_head = data[0]
+    date_index = data_head.index("Date")
+    
+    for i in range(len(data)-1):
+        # Create a datetime object from the string
+        date_string = data[i+1][date_index]
+        date = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+
+        # Create a string in the desired format
+        weekday = calendar.day_name[date.weekday()]
+        day = date.strftime('%d').lstrip('0').replace(' 0', ' ')
+        suffix = 'th' if 11 <= int(day) <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(int(day) % 10, 'th') 
+        day += suffix
+        month = date.strftime('%B')
+        year = date.strftime('%Y')
+
+        date_string = f"{weekday} {day} {month} {year}"
+
+        data[i+1][date_index] = date_string
+
+        # Print the result
+        #print(date_string)  # Output: 'Thursday 4th May 2023'
+    
+    return data
