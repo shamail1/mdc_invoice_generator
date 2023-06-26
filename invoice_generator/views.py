@@ -78,8 +78,8 @@ def process_data(data):
         for j in range(len(data_required_col)):
             c_list.append(data_required_col[j][i])
         final_processed_data.append(c_list)
-
-
+    
+    final_processed_data = final_processed_data[0:1] + sorted(final_processed_data[1:], key=lambda x: (x[0], x[1]))
     final_processed_data = convert_dates_to_written_format(final_processed_data)   
     return final_processed_data
 
@@ -179,9 +179,24 @@ def view_bookings(request):
         print("processed invoice data: ", final_invoice_data)
 
         total = calc_total(final_invoice_data)
+        invoice_date = request.POST['invoice_date']
+
+        if (invoice_date):
+            date = datetime.datetime.strptime(invoice_date, '%Y-%m-%d').date()
+
+            # Create a string in the desired format
+            weekday = calendar.day_name[date.weekday()]
+            day = date.strftime('%d').lstrip('0').replace(' 0', ' ')
+            suffix = 'th' if 11 <= int(day) <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(int(day) % 10, 'th') 
+            day += suffix
+            month = date.strftime('%B')
+            year = date.strftime('%Y')
+
+            invoice_date = f"{weekday} {day} {month} {year}"
+    
         
         # Pass CSV data to template
-        context = {'data': final_invoice_data, 'invoice_number' : request.POST['invoice_number'], 'to' : request.POST['to'], 'date' : request.POST['invoice_date'],'total': total}
+        context = {'data': final_invoice_data, 'invoice_number' : request.POST['invoice_number'], 'to' : request.POST['to'], 'date' : invoice_date,'total': total}
         return render(request, 'invoice.html', context)
 
     return render(request, 'view_bookings.html', context)
@@ -329,7 +344,4 @@ def convert_dates_to_written_format(data):
 
         data[i+1][date_index] = date_string
 
-        # Print the result
-        #print(date_string)  # Output: 'Thursday 4th May 2023'
-    
     return data
