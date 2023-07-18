@@ -113,6 +113,7 @@
 				  {% if forloop.counter > 1 %}
 					<td><a href="{% url 'del_row' row.0 %}">Delete</a></td>
 					<td><a href="{% url 'edit_row' row.0 %}">Edit</a></td>
+					<td><a href="{% url 'view_single_booking_raw' row.0 %}">view</a></td>
 				  {% endif %}
 				</tr>
 			  {% endfor %}

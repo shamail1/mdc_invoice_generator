@@ -345,3 +345,56 @@ def convert_dates_to_written_format(data):
         data[i+1][date_index] = date_string
 
     return data
+
+def view_single_booking_raw(request, id):
+    print('sham is here', id)
+
+    with open(csv_file_path, 'r') as f:
+        csv_data = csv.reader(f.read().splitlines())
+        data = [row for row in csv_data]
+
+    wanted_single_data = []
+    for row in data:
+        # assuming first coloumn is data_id
+        if row[0] == str(id):
+            wanted_single_data = row
+            break
+    
+    # Create a datetime object from the string
+    date_string = wanted_single_data[2] #assuming date index is 2
+    date = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+
+    # Create a string in the desired format
+    weekday = calendar.day_name[date.weekday()]
+    day = date.strftime('%d').lstrip('0').replace(' 0', ' ')
+    suffix = 'th' if 11 <= int(day) <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(int(day) % 10, 'th') 
+    day += suffix
+    month = date.strftime('%B')
+    year = date.strftime('%Y')
+
+    date_string = f"{weekday} {day} {month} {year}"
+
+    wanted_single_data[2] = date_string #assuming date index is 2
+
+    # Assuming index for context
+    context = {
+    'Date': wanted_single_data[2], 
+    'Time' : wanted_single_data[3],
+    'Customer' : wanted_single_data[4],
+    'Contact_Number' : wanted_single_data[5],
+    'Pick_up_Address' : wanted_single_data[6] ,
+    'Drop_off_Address' : wanted_single_data[7] ,
+    'Driver_Name' : wanted_single_data[8] ,
+    'Driver_Badge' : wanted_single_data[9] ,
+    'Vehicle_Reg' : wanted_single_data[10] ,
+    'License_Vehicle' : wanted_single_data[11] ,
+    'Fare' : wanted_single_data[12] ,
+    'Payment_Type' : wanted_single_data[13] ,
+    'Date_Booked' : wanted_single_data[14] ,
+    'Time_Booked' : wanted_single_data[15] ,
+    'Status' : wanted_single_data[16] ,
+    'Job_source' : wanted_single_data[17]
+    }
+
+    return render(request, 'singleBookingRaw.html', context)
+
