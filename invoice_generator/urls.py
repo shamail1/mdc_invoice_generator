@@ -5,6 +5,7 @@ from .views import view_bookings
 from .views import home
 from .views import delete_row
 from .views import edit_row
+from .views import view_single_booking_raw
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     path('view_booking_data/', view_bookings, name='view_bookings'),
     path('delete/<str:id>/', delete_row, name='del_row'),
     path('edit/<str:id>/', edit_row, name='edit_row'),
+    path('view_single_booking/<str:id>/', view_single_booking_raw, name='view_single_booking_raw'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
